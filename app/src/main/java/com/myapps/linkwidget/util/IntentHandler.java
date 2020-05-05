@@ -32,8 +32,6 @@ public class IntentHandler extends Activity {
             } else {
                 Util.launchUrl(parsed, this);
             }
-
-            //cogit
         }else{
             FolderChangeStorer f = (FolderChangeStorer) getIntent().getExtras().getSerializable(IntentHandler.CHANGE_FOLDER);
             setChangeFolder(f.storage, f.toChange, widgetID);
