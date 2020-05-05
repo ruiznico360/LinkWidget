@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingTop="15dp"
+    android:background="@drawable/reg_border"
+    android:paddingBottom="15dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:layout_height="190dp">
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/delete"
+        android:id="@+id/delete"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/delete"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="Name"
+        android:textStyle="bold"
+        android:id="@+id/nameText"
+        android:textSize="20dp" />
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/delete"
+        android:layout_below="@id/nameText"
+        android:layout_marginEnd="15dp"
+        android:hint="Website"
+        style="@style/MyEditTextStyle"
+        android:layout_alignStart="@id/nameText"
+        android:id="@+id/nameEditor"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameEditor"
+        android:layout_alignStart="@id/nameEditor"
+        android:id="@+id/urlText"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="URL"
+        android:layout_marginTop="15dp"/>
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/delete"
+        android:layout_below="@id/urlText"
+        android:layout_marginEnd="15dp"
+        android:hint="www.website.com"
+        android:inputType="textWebEmailAddress"
+        style="@style/MyEditTextStyle"
+        android:layout_alignStart="@id/nameText"
+        android:id="@+id/urlEditor" />
+
+
+</RelativeLayout>

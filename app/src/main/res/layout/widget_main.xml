@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/rounded_corners"
+    android:paddingBottom="3dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="9dp"
+        android:paddingTop="6dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/mainIconButton"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/mainIconButton"
+            android:layout_toStartOf="@+id/editButton"
+            android:layout_centerVertical="true"
+            android:id="@+id/title"
+            android:textAppearance="@style/MTextView"
+            style="@style/MTextView"
+            android:layout_marginLeft="10dp"
+            android:textSize="17dp" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/editButton"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/edit" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#D8D8D8"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:id="@+id/empty">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="100dp"
+                android:src="@drawable/internet" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:text="This folder is empty. Tap here to add some links!"
+                android:layout_height="wrap_content">
+            </TextView>
+
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:id="@+id/link_list"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:scrollbarThumbVertical="@drawable/blue_scrollbar"
+            android:layout_height="match_parent">
+        </ListView>
+
+    </RelativeLayout>
+</LinearLayout>
