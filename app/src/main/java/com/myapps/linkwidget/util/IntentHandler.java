@@ -23,7 +23,7 @@ public class IntentHandler extends Activity {
         finish();
         
         int widgetID = getIntent().getExtras().getInt(Widget.WIDGET_ID);
-
+git
         if (getIntent().getExtras().get(URL_TO_VIEW) != null) {
             Uri parsed = MUrl.parse(getIntent().getExtras().getString(URL_TO_VIEW));
 
