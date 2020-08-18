@@ -23,6 +23,7 @@ import com.myapps.linkwidget.R;
 import com.myapps.linkwidget.model.MStorable;
 import com.myapps.linkwidget.model.MUrl;
 import com.myapps.linkwidget.serialize.Storage;
+import com.myapps.linkwidget.util.UrlUtil;
 import com.myapps.linkwidget.util.Util;
 
 public class StorableListHandler extends ActivityHandler {
@@ -183,7 +184,7 @@ public class StorableListHandler extends ActivityHandler {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Util.launchUrl(MUrl.parse(((MUrl)curr).getUrl()), c);
+                        Util.launchUrl(UrlUtil.parse(((MUrl)curr).getUrl()), c);
                     }
                 });
                 url.setText(((MUrl)curr).getUrl());

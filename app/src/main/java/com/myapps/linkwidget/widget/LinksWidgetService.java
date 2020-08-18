@@ -14,6 +14,8 @@ import com.myapps.linkwidget.R;
 import com.myapps.linkwidget.model.MUrl;
 import com.myapps.linkwidget.serialize.FileIO;
 import com.myapps.linkwidget.serialize.Storage;
+import com.myapps.linkwidget.util.UrlUtil;
+import com.myapps.linkwidget.util.Util;
 
 public class LinksWidgetService extends RemoteViewsService {
 
@@ -33,6 +35,8 @@ public class LinksWidgetService extends RemoteViewsService {
         private Context mContext;
         private MFolder current;
         private int widgetID;
+        private Bitmap[] bmaps;
+        private Thread[] loadBmaps;
 
         public MyWidgetRemoteViewsFactory(Context applicationContext, Intent intent) {
             this.mContext = applicationContext;
@@ -43,39 +47,50 @@ public class LinksWidgetService extends RemoteViewsService {
         private void load() {
             this.storage = FileIO.getStorage(getApplicationContext());
             this.current = storage.getCurrent(widgetID);
+
+            bmaps = new Bitmap[getCount()];
+            loadBmaps = new Thread[getCount()];
+            for (int i = 0; i < getCount(); i++) {
+                final int index = i;
+                loadBmaps[i] = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (current.getStorable(index) instanceof MUrl) bmaps[index] = UrlUtil.getURLIcon(((MUrl)current.getStorable(index)).getUrl());
+                    }
+                });
+                loadBmaps[i].start();
+            }
         }
 
-        public RemoteViews getViewAt(int position){
+        public RemoteViews getViewAt(int position) {
             if (storage == null) return null;
 
-            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_storable);
+            final RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_storable);
             Intent fillInIntent = new Intent();
             Bundle b = IntentHandler.genDefaultBundle(widgetID);
 
             if (current.getStorable(position) instanceof MFolder) {
                 MFolder l = (MFolder) current.getStorable(position);
                 rv.setTextViewText(R.id.linkText, l.getName());
-                rv.setImageViewResource(R.id.linkLogo, R.drawable.folder);
+                rv.setImageViewResource(R.id.linkLogo, R.drawable.folder_mini);
                 b.putSerializable(IntentHandler.CHANGE_FOLDER, new IntentHandler.FolderChangeStorer(storage, l));
             }else{
-                MUrl l = (MUrl) current.getStorable(position);
+                final MUrl l = (MUrl) current.getStorable(position);
                 rv.setTextViewText(R.id.linkText, l.getName());
-                Bitmap icon = MUrl.getURLIcon(l.getUrl());
-
-                if (icon == null){
-                    rv.setImageViewResource(R.id.linkLogo, R.drawable.internet);
-                }else{
-                    rv.setImageViewBitmap(R.id.linkLogo, icon);
-                }
-
                 b.putString(IntentHandler.URL_TO_VIEW, l.getUrl());
+
+                try {
+                    loadBmaps[position].join(2000);
+                }catch (InterruptedException e) {}
+
+                if (bmaps[position] == null) rv.setImageViewResource(R.id.linkLogo, R.drawable.internet_mini);
+                else rv.setImageViewBitmap(R.id.linkLogo, bmaps[position]);
             }
             fillInIntent.putExtras(b);
             rv.setOnClickFillInIntent(R.id.linkButton, fillInIntent);
 
             return rv;
         }
-
 
         public void onDataSetChanged() { load(); }
         public int getCount() { return current.getSize(); }

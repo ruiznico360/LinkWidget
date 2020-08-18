@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.myapps.linkwidget.model.MFolder;
-import com.myapps.linkwidget.model.MUrl;
 import com.myapps.linkwidget.serialize.FileIO;
 import com.myapps.linkwidget.serialize.Storage;
 import com.myapps.linkwidget.widget.Widget;
@@ -25,7 +24,7 @@ public class IntentHandler extends Activity {
         int widgetID = getIntent().getExtras().getInt(Widget.WIDGET_ID);
 
         if (getIntent().getExtras().get(URL_TO_VIEW) != null) {
-            Uri parsed = MUrl.parse(getIntent().getExtras().getString(URL_TO_VIEW));
+            Uri parsed = UrlUtil.parse(getIntent().getExtras().getString(URL_TO_VIEW));
 
             if (parsed == null) {
                 Toast.makeText(getApplicationContext(), "Invalid URL", Toast.LENGTH_LONG).show();

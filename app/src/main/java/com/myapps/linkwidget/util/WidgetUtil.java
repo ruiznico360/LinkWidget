@@ -78,12 +78,17 @@ public class WidgetUtil {
     public static void sendUpdate(Context c) {
         ComponentName name = new ComponentName(c, Widget.class);
         int [] ids = AppWidgetManager.getInstance(c).getAppWidgetIds(name);
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(c);
-        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.link_list);
 
+//        updateList(c);
         updateWidgetData(c, ids);
     }
 
+    public static void updateList(Context c) {
+        ComponentName name = new ComponentName(c, Widget.class);
+        int [] ids = AppWidgetManager.getInstance(c).getAppWidgetIds(name);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(c);
+        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.link_list);
+    }
     public static void clear(Context c, int[] widgetIDs) {
         Storage s = FileIO.getStorage(c);
         for (int id : widgetIDs) {
